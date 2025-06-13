@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gift Message</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0d1b2a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .start-screen, .message-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      transition: opacity 1.5s ease;
+    }
+
+    .start-screen {
+      background-color: #0d1b2a;
+      z-index: 2;
+    }
+
+    .message-screen {
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .fade-out {
+      opacity: 0;
+      z-index: 0;
+    }
+
+    .fade-in {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    button {
+      background-color: #1e90ff;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    
+
+    .slideshow {
+      width: 300px;
+      height: 500px;
+      overflow: hidden;
+      position: relative;
+      border-radius: 5%;
+    }
+
+    .slideshow-track {
+      display: flex;
+      transition: transform 1s ease-in-out;
+    }
+
+    .slideshow img {
+      width: 300px;
+      height: 500px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .love-text {
+      max-width: 80%;
+      font-size: 16px;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="start-screen" id="start">
+    <button onclick="startMessage()">💖 Click</button>
+  </div>
+
+  <div class="message-screen" id="message">
+    <div class="container">
+      <h2>Website for my beloved love and only princess ❤️❤️</h2>
+      <div class="slideshow">
+        <div class="slideshow-track" id="slideshowTrack">
+          <img src="1746962318757.jpg" alt="Slide 1" />
+          <img src="1746962318732.jpg" alt="Slide 2" />
+          <img src="1746962318706.jpg" alt="Slide 3" />
+          <img src="1746962318677.jpg" alt="Slide 4" />
+          <img src="1745266760276.jpg" alt="Slide 5" />
+          <img src="1745266760238.jpg" alt="Slide 6" />
+          <img src="1745266759683.jpg" alt="Slide 7" />
+          <img src="1745266759381.jpg" alt="Slide 8" />
+          <img src="1745266759365.jpg" alt="Slide 9" />
+          <img src="1745266759350.jpg" alt="Slide 10" />
+          <img src="1745266758669.jpg" alt="Slide 11" />
+          <img src="1745266758618.jpg" alt="Slide 12" />
+          <img src="1745266757364.jpg" alt="Slide 13" />
+        </div>
+      </div>
+      <div class="love-text">
+        ❤️ I've loved you for: <span id="timeTogether"></span><br/><br/>
+        With each passing day, my heart fills with even more love and admiration for you. Your smile lights up my world, and every hug makes me feel like I'm exactly where I belong. You're the reason behind my best thoughts, and everything becomes more beautiful and meaningful with you by my side. I love you forever ❤️
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function startMessage() {
+      const startScreen = document.getElementById('start');
+      const messageScreen = document.getElementById('message');
+
+      startScreen.classList.add('fade-out');
+      setTimeout(() => {
+        messageScreen.classList.add('fade-in');
+      }, 1500);
+    }
+
+    function updateLoveTime() {
+      const startDate = new Date("2024-10-26T00:00:00");
+      const now = new Date();
+
+      let diff = now - startDate;
+      let seconds = Math.floor(diff / 1000);
+
+      let years = Math.floor(seconds / (365.25 * 24 * 60 * 60));
+      seconds -= years * 365.25 * 24 * 60 * 60;
+
+      let months = Math.floor(seconds / (30.44 * 24 * 60 * 60));
+      seconds -= months * 30.44 * 24 * 60 * 60;
+
+      let days = Math.floor(seconds / (24 * 60 * 60));
+      seconds %= (24 * 60 * 60);
+
+      let hours = Math.floor(seconds / 3600);
+      seconds %= 3600;
+
+      let minutes = Math.floor(seconds / 60);
+      seconds = Math.floor(seconds % 60);
+
+      let text = '';
+      if (years >= 1) {
+        text = `${years} year(s), ${months} month(s), ${days} day(s), ${hours} hour(s), ${minutes} minute(s) and ${seconds} second(s)`;
+      } else {
+        text = `${months} month(s), ${days} day(s), ${hours} hour(s), ${minutes} minute(s) and ${seconds} second(s)`;
+      }
+
+      document.getElementById("timeTogether").textContent = text;
+    }
+
+    setInterval(updateLoveTime, 1000);
+    updateLoveTime();
+
+    // Slideshow control with ease every 5 seconds
+    const track = document.getElementById('slideshowTrack');
+    const slides = track.children.length;
+    let index = 0;
+
+    setInterval(() => {
+      index = (index + 1) % slides;
+      track.style.transform = `translateX(-${300 * index}px)`;
+    }, 5000);
+  </script>
+</body>
+</html>
